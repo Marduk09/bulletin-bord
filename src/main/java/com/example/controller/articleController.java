@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,6 +18,7 @@ import com.example.repository.ArticleRepository;
 import com.example.repository.CommentRepository;
 
 @Controller
+@Transactional
 @RequestMapping("/bord")
 public class ArticleController {
 	
@@ -24,8 +26,7 @@ public class ArticleController {
 	private ArticleRepository articleRepository;
 	
 	@Autowired
-	private CommentRepository commentRepository;
-	
+	private CommentRepository commentRepository;	
 	
 	
 	@ModelAttribute
@@ -69,14 +70,30 @@ public class ArticleController {
 		return "redirect:/bord";
 	}
 	
+	/**
+	 * コメント投稿.
+	 * @param form コメント投稿用フォーム
+	 * @return 記事一覧画面へのリダイレクト
+	 */
 	@RequestMapping("/insert-comment")
 	public String insertComment(CommentForm form) {
 		Comment comment = new Comment();
 		BeanUtils.copyProperties(form, comment);
 		comment.setArticleId(Integer.parseInt(form.getArticleId()));
-		System.out.println(form);
-		System.out.println(comment);
 		commentRepository.insert(comment);
+		
+		return "redirect:/bord";
+	}
+	
+	/**
+	 * 記事を削除.
+	 * @param articleId 削除する記事ID
+	 * @return 記事一覧画面へのリダイレクト
+	 */
+	@RequestMapping("/delete-article")
+	public String deleteArticle(String articleId) {
+		commentRepository.deleteByArticleId(Integer.parseInt(articleId));
+		articleRepository.deleteById(Integer.parseInt(articleId));
 		
 		return "redirect:/bord";
 	}

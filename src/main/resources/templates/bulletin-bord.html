@@ -23,6 +23,7 @@
 		投稿者名: <span th:text="${article.name}">?</span><br>
 		投稿内容: <span th:text="${article.content}">?</span><br>
 		<form th:action="@{/bord/delete-article}" method="post">
+			<input type="hidden" name="articleId" th:value="${article.id}">
 			<input type="submit" value="記事削除">
 		</form>
 		<br>
@@ -33,10 +34,10 @@
 			<br>
 		</div>
 		<form th:action="@{/bord/insert-comment}" method="post">
-			<label for = "commentName">　　名前：</label>
-			<input type= "text" name="name" id="commentName"><br>
-			<label for = "commentContent">コメント：</label>
-			<textarea rows="3" cols="30" name="content" id=commentContent></textarea><br>
+			<label th:for = "commentName + ${article.id}">　　名前：</label>
+			<input type= "text" name="name" th:id="commentName + ${article.id}"><br>
+			<label th:for = "commentContent + ${article.id}">コメント：</label>
+			<textarea rows="3" cols="30" name="content" th:id="commentContent + ${article.id}"></textarea><br>
 			<input type="hidden" name="articleId" th:value="${article.id}">
 			<input type="submit" value="コメント投稿">
 			<hr>
