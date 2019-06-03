@@ -19,17 +19,25 @@
 	<hr>
 	
 	<div th:each="article: ${articleList}">
-		投稿ID	: <span th:text="${article.id}">?</span><br>
+		投稿ID 	: <span th:text="${article.id}">?</span><br>
 		投稿者名: <span th:text="${article.name}">?</span><br>
 		投稿内容: <span th:text="${article.content}">?</span><br>
 		<form th:action="@{/bord/delete-article}" method="post">
 			<input type="submit" value="記事削除">
 		</form>
+		<br>
+		<div th:each="comment: ${article.commentList}">
+			コメントID 	: <span th:text="${comment.id}">?</span><br>
+			コメント者名: <span th:text="${comment.name}">?</span><br>
+			コメント内容: <span th:text="${comment.content}">?</span><br>
+			<br>
+		</div>
 		<form th:action="@{/bord/insert-comment}" method="post">
 			<label for = "commentName">　　名前：</label>
-			<input type= "text" name="commentName" id="commentName"><br>
+			<input type= "text" name="name" id="commentName"><br>
 			<label for = "commentContent">コメント：</label>
-			<textarea rows="3" cols="30" name="commentContent" id=commentContent></textarea><br>
+			<textarea rows="3" cols="30" name="content" id=commentContent></textarea><br>
+			<input type="hidden" name="articleId" th:value="${article.id}">
 			<input type="submit" value="コメント投稿">
 			<hr>
 		</form>

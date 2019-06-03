@@ -28,7 +28,7 @@ public class Comment {
 	}
 	@Override
 	public String toString() {
-		return "Comment [id=" + id + ", name=" + name + ", content=" + content + ", articId=" + articleId + "]";
+		return "Comment [id=" + id + ", name=" + name + ", content=" + content + ", articleId=" + articleId + "]";
 	}
 	public Integer getId() {
 		return id;
