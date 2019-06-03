@@ -19,7 +19,7 @@ import com.example.domain.Article;
  *
  */
 @Repository
-public class articleRepository {
+public class ArticleRepository {
 
 	
 	private static final RowMapper<Article> ARTICLE_ROW_MAPPER = (rs, i) -> {
@@ -39,7 +39,7 @@ public class articleRepository {
 	 * @return 全記事のリスト(コメントリストは空)
 	 */
 	public List<Article> findAll(){
-		String sql = "SELECT id, name, content FROM articles;";
+		String sql = "SELECT id, name, content FROM articles ORDER BY id DESC;";
 		List<Article> articleList = template.query(sql, ARTICLE_ROW_MAPPER);
 		
 		return articleList;
